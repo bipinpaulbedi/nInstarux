@@ -1,0 +1,113 @@
+<template name="client">
+	<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-1 home-grid">
+		{{> askTheSpeakerclient}}
+	</ul>
+	<ul id="masonry-container-client" class="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
+		{{> questionPollclient}}
+	</ul>
+</template>
+<template name="askTheSpeakerclient">
+	<li>
+		<form method="post" class="dashbord-grid askQuestionFormclient">
+			<div class="row">
+				<div class="small-12 columns text-center">
+					<label>Ask question...
+						<textarea name="askQuestionclient" maxlength="140">
+
+						</textarea>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns text-center">
+					<input type="submit" class="button round success" value="Send"/>
+				</div>
+			</div>
+		</form>	
+	</li>
+</template>
+<template name="questionPollclient">
+	{{#each allEventQuestionPollclient}}
+		{{#if isQuestionclient}}
+			{{> questionclient}}
+		{{else}}
+			{{> pollclient}}
+		{{/if}}
+	{{/each}}
+</template>
+<template name="questionclient">
+	<li class="admin-divider">
+		<div class="row text-center dashbord-grid">
+			<p>{{question}}</p>
+			{{#if enableReply}}
+				<div class="row">
+					{{> answerclient}}
+				</div>
+			{{/if}}
+			<div class="row">
+				<div class="small-6 columns" >
+					<p>Upvote</p>
+					<a href="#" class="addVoteclient size-18"><i class="fi-plus icon-color"></i> {{votesCount}}</a>
+				</div>
+				<div class="small-6 columns" >
+					<p>Tweet</p>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-text="{{question}}">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+				</div>
+			</div>
+		</div>
+	</li>
+</template>
+<template name="answerclient">
+	<form method="post">
+			<div class="small-8 columns">
+				<input name="reply" type="text" placeholder="REPLY" maxlength="140"/>
+			</div>
+			<div class="small-4 columns">
+				<input type="submit" class="button postfix" value="Send >>"/>
+			</div>
+	</form>	
+</template>
+<template name="pollclient">
+	<li class="admin-divider">
+		<div class="row text-center dashbord-grid">
+			<p>{{question}}</p>
+			<div class="row">
+				<div class="small-3 columns" >
+					<p>{{firstChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice1{{_id}}" type="radio" class="castPoll" value="1" name="pollGroup{{_id}}" />
+						<label for="pollChoice1{{_id}}"></label>
+					</div> 
+				</div>
+				<div class="small-3 columns" >
+				<p>{{secondChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice2{{_id}}" type="radio" class="castPoll" value="2" name="pollGroup{{_id}}" />
+						<label for="pollChoice2{{_id}}"></label>
+					</div> 
+				</div>
+				<div class="small-3 columns" >
+				<p>{{thirdChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice3{{_id}}" type="radio" class="castPoll" value="3" name="pollGroup{{_id}}" />
+						<label for="pollChoice3{{_id}}"></label>
+					</div>	
+				</div>
+				<div class="small-3 columns" >
+				<p>{{forthChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice4{{_id}}" type="radio" class="castPoll" value="4" name="pollGroup{{_id}}" />
+						<label for="pollChoice4{{_id}}"></label>
+					</div> 
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			{{> pollResultclient}}
+		</div>
+	</li>
+</template>
+<template name="pollResultclient">
+	{{> highchartsHelper chartId=chartIdclient chartWidth="100%" charHeight="100%" chartObject=chartResultclient}}
+</template>

@@ -1,0 +1,181 @@
+<template name="admin">
+<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-2 home-grid">
+	{{> askTheSpeaker}}
+	{{> createPoll}}
+</ul>
+<ul id="masonry-container-admin" class="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
+	{{> questionPoll}}
+</ul>
+</template>
+<template name="askTheSpeaker">
+	<li>
+		<form method="post" class="dashbord-grid askQuestionForm">
+			<div class="row">
+				<div class="small-12 columns text-center">
+					<label>Ask question...
+						<textarea name="askQuestion" maxlength="140">
+
+						</textarea>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns text-center">
+					<input type="submit" class="button round success" value="Send"/>
+				</div>
+			</div>
+		</form>	
+	</li>
+</template>
+<template name="createPoll">
+	<li>
+		<form method="post" class="dashbord-grid takeConsensusForm">
+			<div class="row">
+				<div class="small-12 columns text-center">
+					<label>Take consensus...
+						<textarea name="askQuestion" maxlength="140">
+
+						</textarea>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns text-center">
+					<input name="choice1" placeholder="CHOICE 1" maxlength="50"/>
+				</div>
+				<div class="small-6 columns text-center">
+					<input name="choice2" placeholder="CHOICE 2" maxlength="50"/>
+				</div>
+			</div>	
+			<div class="row">
+				<div class="small-6 columns text-center">
+					<input name="choice3" placeholder="CHOICE 3" maxlength="50"/>
+				</div>
+				<div class="small-6 columns text-center">
+					<input name="choice4" placeholder="CHOICE 4" maxlength="50"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns text-center">
+					<input type="submit" class="button round success" value="Send"/>
+				</div>
+			</div>
+		</form>	
+	</li>
+</template>
+<template name="questionPoll">
+	{{#each allEventQuestionPoll}}
+		{{#if isQuestion}}
+			{{> question}}
+		{{else}}
+			{{> poll}}
+		{{/if}}
+	{{/each}}
+</template>
+<template name="question">
+	<li class="admin-divider">
+		<div class="row text-center dashbord-grid">
+			<p>{{question}}</p>
+			{{#if enableReply}}
+				<div class="row">
+					{{> answer}}
+				</div>
+			{{/if}}
+			<div class="row">
+				<div class="small-4 columns" >
+					<p>Upvote</p>
+					<a href="#" class="addVote size-18"><i class="fi-plus icon-color"></i> {{votesCount}}</a>
+				</div>
+				<div class="small-4 columns">
+					<div class="switch round small">
+						<p>Approve</p>
+						<input id="isApproved2{{_id}}" class="approve" type="checkbox" checked="{{isApproved}}" />
+						<label for="isApproved2{{_id}}"></label>
+					</div>		
+				</div>
+				<div class="small-4 columns">
+					<div class="switch round small">
+						<p>Replies</p>
+						<input id="enableReply2{{_id}}" class="enable" type="checkbox" checked="{{enableReply}}" />
+						<label for="enableReply2{{_id}}"></label>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			{{> questionReplies}}
+		</div>
+	</li>
+</template>
+<template name="answer">
+	<form method="post">
+			<div class="small-8 columns">
+				<input name="reply" type="text" placeholder="REPLY" maxlength="140"/>
+			</div>
+			<div class="small-4 columns">
+				<input type="submit" class="button postfix" value="Send >>"/>
+			</div>
+	</form>	
+</template>
+<template name="questionReplies">
+	<div class="text-right dashbord-grid">
+	{{#each questionRepliesSegregated}}
+		<p>{{reply}}</p>
+	{{/each}}	
+	</div>
+</template>
+<template name="poll">
+	<li class="admin-divider">
+		<div class="row text-center dashbord-grid">
+			<p>{{question}}</p>
+			<div class="row">
+				<div class="small-12 columns">
+					<div class="switch round small">
+						<p>Approve</p>
+						<input id="isApprovedPoll{{_id}}" type="checkbox" class="approve" checked="{{isApproved}}" />
+						<label for="isApprovedPoll{{_id}}"></label>
+					</div>		
+				</div>
+			</div>
+			<!-- <div class="row">
+				<div class="small-3 columns" >
+					<p>{{firstChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice1{{_id}}" type="radio" name="pollGroup{{_id}}" />
+						<label for="pollChoice1{{_id}}"></label>
+					</div> 
+				</div>
+				<div class="small-3 columns" >
+				<p>{{secondChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice2{{_id}}" type="radio" name="pollGroup{{_id}}" />
+						<label for="pollChoice2{{_id}}"></label>
+					</div> 
+				</div>
+				<div class="small-3 columns" >
+				<p>{{thirdChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice3{{_id}}" type="radio" name="pollGroup{{_id}}" />
+						<label for="pollChoice3{{_id}}"></label>
+					</div>	
+				</div>
+				<div class="small-3 columns" >
+				<p>{{forthChoice}}</p>
+					<div class="switch small">
+						<input id="pollChoice4{{_id}}" type="radio" name="pollGroup{{_id}}" />
+						<label for="pollChoice4{{_id}}"></label>
+					</div> 
+				</div>
+			</div> -->
+		</div>
+		<div class="row">
+		<p>
+			<button type="button" class="button postfix computeResult">Compute Results...</button>
+		</p>
+			{{> pollResult}}
+		</div>
+	</li>
+</template>
+<template name="pollResult">
+	{{> highchartsHelper chartId=chartId chartWidth="100%" charHeight="100%" chartObject=chartResult}}
+</template>

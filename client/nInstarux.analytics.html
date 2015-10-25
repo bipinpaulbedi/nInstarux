@@ -1,0 +1,36 @@
+<template name="analysis">
+	<ul id="masonry-container-analysis" class="small-block-grid-1 medium-block-grid-2 large-block-grid-2 home-grid">
+		{{> totalUsersAnalysis}}
+		{{> topFiveQuestions}}
+	</ul>
+</template>
+<template name="totalUsersAnalysis">
+	<li class="admin-divider">
+		<div class="row">
+			<div class="small-12 columns text-center">
+				<p>Total Users Participated</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-12 columns text-center">
+				{{> highchartsHelper chartId=totalUsersAnalysisId chartWidth="100%" charHeight="100%" chartObject=totalUsersAnalysisResult}}
+			</div>
+		</div>
+	</li>
+</template>
+<template name="topFiveQuestions">
+	<li class="admin-divider">
+		<div class="row">
+			<div class="small-12 columns text-center">
+				<p>Top Five Question</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-12 columns text-center">
+				{{#each topFiveQuestionsResult}}
+					<p>{{question}}</p>
+				{{/each}}
+			</div>
+		</div>
+	</li>
+</template>

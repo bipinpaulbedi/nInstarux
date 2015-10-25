@@ -1,0 +1,3 @@
+sAlert.config({
+	position: 'bottom'	
+})

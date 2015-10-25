@@ -1,0 +1,85 @@
+<template name="dashboard">
+	<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-2 home-grid">
+		<li>{{> joinEvent}}</li>
+		<li>{{> createUpdateEvent}}</li>
+	</ul>
+	<ul id="masonry-container" class="small-block-grid-1 medium-block-grid-1 large-block-grid-2">
+		{{> myEvents}}
+	</ul>
+</template>
+<template name="joinEvent">
+	<fieldset>
+		<legend>Brewery</legend>
+		<div class="small-12 columns text-justify">
+			<p>This is a preview release of ZEYNOTE that you can use for free. Ultimately, we will have paid plans for ZEYNOTE but we just don’t know yet what to charge for yet. We want to deliver real value to you but at the same time, build a sustainable business for ourselves. Don’t worry, we are not going to start charging overnight. We will keep you posted on everything brewing inside our camp and keep asking for your feedback constantly. And we will always have some kind of a free plan.</p>
+		</div>
+		<div class="small-12 columns">
+			<p class="right"> Follow us on <a href="http://twitter.com/zeynote">Twitter</a> | <a href="http://blog.zeynote.com">Blog</a> </p>
+		</div>
+	</fieldset>
+	<form method="post" class="clientLauncher" data-abide>
+		<fieldset>
+			<legend>Join Event</legend>
+			<div class="small-8 columns">
+				<input type="number" name="eventCode" placeholder="EVENT CODE" max="9999" maxlength="4" required />
+			</div>
+			<div class="small-4 columns">
+				<input class="button postfix" type="submit" value="GO">
+			</div>
+		</fieldset>
+	</form>
+</template>
+<template name="createUpdateEvent">
+	<form class="cuEvent" method="post">
+		{{#with eventToEdit}}
+		<fieldset>
+			<legend>{{currentOperation}}</legend>
+			<div class="row">
+				<div class="small-12 columns">
+					<label>Title
+						<input type="text" name="title" placeholder="Title" value="{{title}}" maxlength="50" required/>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns">
+					<label>Description
+						<input type="text" name="description" placeholder="Description" value="{{description}}" maxlength="50" required/>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-12 columns text-center margin11">
+					<input class="button round success" type="submit" value="Save" />
+					<input class="button round warning reset" type="reset" value="Reset" />
+				</div>
+			</div>
+		</fieldset>
+		{{/with}}
+	</form>
+</template>
+<template name="myEvents">
+	{{#each myAllEvents}}
+	<li>
+		<fieldset>
+			<legend>Event Code : {{code}}</legend>
+			<p>{{title}}</p>
+			<p>{{description}}</p>
+			<div class="icon-bar three-up">
+				<a class="item" href="/admin/{{_id}}">
+					<i class="fi-torso icon-color"></i>
+					<label>Admin</label>
+				</a>
+				<a class="item editEvent">
+					<i class="fi-page-edit icon-color"></i>
+					<label>Edit</label>
+				</a>
+				<a class="item" href="/analysis/{{_id}}">
+					<i class="fi-graph-bar icon-color"></i>
+					<label>Analytics</label>
+				</a>
+			</div>
+		</fieldset>
+	</li>
+	{{/each}} 
+</template>
